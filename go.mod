@@ -1,4 +1,4 @@
-module github.com/gin-gonic/gin
+module github.com/Carykd/gin
 
 go 1.22
 
