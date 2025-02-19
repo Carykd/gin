@@ -5,7 +5,7 @@ go 1.22
 require (
 	github.com/bytedance/sonic v1.11.6
 	github.com/gin-contrib/sse v0.1.0
-	github.com/gin-gonic/gin v1.10.0
+	github.com/Carykd/gin v1.10.0
 	github.com/go-playground/validator/v10 v10.22.1
 	github.com/goccy/go-json v0.10.2
 	github.com/json-iterator/go v1.1.12
@@ -45,4 +45,8 @@ require (
 	golang.org/x/sys v0.28.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d // indirect
+)
+
+replace (
+	
 )
