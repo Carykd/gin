@@ -20,9 +20,9 @@ import (
 	"sync"
 	"time"
 
+	"github.com/Carykd/gin/binding"
+	"github.com/Carykd/gin/render"
 	"github.com/gin-contrib/sse"
-	"github.com/gin-gonic/gin/binding"
-	"github.com/gin-gonic/gin/render"
 )
 
 // Content-Type MIME of the most common data formats.
@@ -256,6 +256,72 @@ func (c *Context) Error(err error) *Error {
 
 	c.Errors = append(c.Errors, parsedError)
 	return parsedError
+}
+
+// Use: Response to clients
+func (c *Context) PublicPanic(msg interface{}) {
+	switch v := msg.(type) {
+	case error:
+		c.Error(Error{
+			Err:  v,
+			Type: ErrorTypePublic,
+		})
+	case string:
+		c.Error(Error{
+			Err:  errors.New(v),
+			Type: ErrorTypePublic,
+		})
+	default:
+		c.Error(Error{
+			Err:  errors.New("invalid param type"),
+			Type: ErrorTypePrivate,
+		})
+	}
+	panic(0)
+}
+
+// Use: Log Internal Error
+func (c *Context) PrivatePanic(msg interface{}) {
+	switch v := msg.(type) {
+	case error:
+		c.Error(Error{
+			Err:  v,
+			Type: ErrorTypePrivate,
+		})
+	case string:
+		c.Error(Error{
+			Err:  errors.New(v),
+			Type: ErrorTypePrivate,
+		})
+	default:
+		c.Error(Error{
+			Err:  errors.New("invalid param type"),
+			Type: ErrorTypePrivate,
+		})
+	}
+	panic(0)
+}
+
+// Use: Standardize Binding Error Response
+func (c *Context) BindPanic(msg interface{}) {
+	switch v := msg.(type) {
+	case error:
+		c.Error(Error{
+			Err:  v,
+			Type: ErrorTypeBind,
+		})
+	case string:
+		c.Error(Error{
+			Err:  errors.New(v),
+			Type: ErrorTypeBind,
+		})
+	default:
+		c.Error(Error{
+			Err:  errors.New("invalid param type"),
+			Type: ErrorTypePrivate,
+		})
+	}
+	panic(0)
 }
 
 /************************************/
